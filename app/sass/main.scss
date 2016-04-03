@@ -1,0 +1,79 @@
+nav ul li a {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 800;
+}
+
+.reject {
+	background: #cc0000 !important;
+	color: #fff !important;
+}
+
+.accept {
+	background: green !important;
+	color: #fff !important;
+}
+
+body {
+	background: url("../img/bg.jpg");
+	background-size: cover;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background: #eee;
+}
+
+main {
+	min-height: 100vh;
+}
+
+.panel{
+	margin: 3em;
+	padding: 2em 0em;
+}
+
+h1 {
+	margin-left: 2em;
+	margin-top: 1em;
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 800;
+}
+
+h2 {
+	font-family: 'Open Sans', sans-serif;
+	margin-bottom: 1em;
+	text-align: center;
+	color: #d1e8e8;
+	font-size: 2.5em;
+	padding: 5%;
+}
+
+label,th {
+	font-family: 'Lora', serif;
+	color: #005959;
+	font-size: 1.2em;
+}
+
+.booking-header {
+	background: #388C8C;
+}
+
+.listing-header {
+	color: #388C8C;
+}
+
+
+form {
+	background: #eee;
+	padding: 2em;
+}
+
+td,th {
+    vertical-align: middle !important;
+	text-align: center;
+	font-family: 'Lora', serif;
+}
+
+

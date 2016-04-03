@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Absence Manager BETA</title>
+  <meta name="description" content="Content comes here">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="Keywords">
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800' rel='stylesheet' type='text/css'>
+  <!--For Headings-->
+  <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+  <!--For Body-->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="css/style.min.css">
+
+</head>
+
+<body ng-app="BookAnAbsence" ng-controller="PanelController" ng-init='list = [
+																		 {
+																			name: "Kris Pinter",
+																			from: "7/7/2016",
+																			to: "17/7/2016",
+																			type: "Holiday",
+																			notes: "Prebooked Holiday",
+	
+																		 },
+																		 {
+																			name: "John Doe",
+																			from: "1/2/2016",
+																			to: "3/2/2016",
+																			type: "Sickness",
+																			notes: "High fever"
+																			
+																		 },
+																		 {
+																			name: "Proud Mary",
+																			from: "5/5/2016",
+																			to: "17/5/2016",
+																			type: "Holiday",
+																			notes: "Wedding in Las Vegas"
+																			
+																			 
+																		 }]'>
+
+
+
+  <header role="banner">
+    <!--NAVIGATION COMES HERE-->
+    <nav>
+      <ul class="nav nav-pills">
+        <li ng-class="{active: isSelected(1)}">
+          <a href ng-click="selectTab(1)"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Book an absence</a>
+        </li>
+        <li ng-class="{active: isSelected(2)}">
+          <a href ng-click="selectTab(2)"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Manage absences</a>
+        </li>
+      </ul>
+    </nav>
+
+  </header>
+
+
+  <main class="" ng-controller="AbsenceController">
+
+    <h1>Absence Manager BETA</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel booking-header" ng-show="isSelected(1)">
+          <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Book your absence by filling out this form</h2>
+
+
+          <!-- FORM ============ -->
+          <form name="absence-form" ng-submit="add()" required>
+
+
+            <!-- NAME -->
+            <div class="form-group">
+              <label for="name" class="control-label">Full name</label>
+              <input type="text" name="name" class="form-control" ng-model="name" placeholder="Your full name. Eg. John Doe" required>
+            </div>
+
+            <!-- FROM -->
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="name">From</label>
+                <input type="text" name="datefrom" class="form-control datepicker" ng-model="from" placeholder="Start Date" required>
+              </div>
+
+              <!-- TO -->
+              <div class="form-group col-md-6">
+                <label for="name">To</label>
+                <input type="text" name="dateto" class="form-control datepicker" ng-model="to" placeholder="Finish Date" required>
+              </div>
+            </div>
+
+            <!-- TYPE -->
+            <div class="form-group">
+              <label for="abs-type">Absence type</label>
+              <select ng-model="type" class="form-control" ng-options="type for type in ['Holiday','Sickness']" title="Absence type" name="abs-type" id="abs-type" required>
+                <option value="">Select your absence type</option>
+              </select>
+            </div>
+
+            <!-- NOTES -->
+            <div class="form-group">
+              <label for="notes">Notes</label>
+              <textarea name="notes" id="notes" class="form-control" rows=10 ng-model="notes" placeholder="Additional notes..."></textarea>
+
+            </div>
+            <button type="submit" class="btn btn-default btn-lg">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7">
+
+        <!-- ABSENCE LIST -->
+        <div class="panel" ng-show="isSelected(2)">
+          <h2 class="listing-header"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span>Time off requests</h2>
+
+          <table class="table table-striped">
+            <tr>
+              <th>Name</th>
+              <th>Start</th>
+              <th>Finish</th>
+              <th>Type</th>
+              <th>Notes</th>
+              <th>Manage</th>
+            </tr>
+            <tr ng-repeat="absence in list" class="ng-class:myVar">
+              <td>{{absence.name}}</td>
+              <td>{{absence.from | date: 'd, MMMM, y'}}</td>
+              <td>{{absence.to | date: 'd, MMMM, y'}}</td>
+              <td>{{absence.type}}</td>
+              <td>{{absence.notes}}</td>
+              <td>
+                <button class="btn btn-warning" ng-really-message="Are you sure?" ng-really-click="delete()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+                <button class="btn btn-danger" value="reject" ng-click="myVar='reject'"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject</button>
+                <button class="btn btn-success" value="accept" ng-click="myVar='accept'"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Approve</button>
+                <button class="btn btn-default" value="cancel" ng-click="myVar=''"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Cancel</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+  </main>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <script>
+    $(function() {
+      $( ".datepicker" ).datepicker();
+    });
+  </script>
+
+</body>
+
+</html>
